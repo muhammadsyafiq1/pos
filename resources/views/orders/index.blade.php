@@ -2,17 +2,14 @@
 
 @section('content')
 <div class="container-fluid">
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-    @endif
     <div class="row">
-        <div class="col-9">
+        <div class="col-8">
+            <form action="{{route('order.store')}}" method="post">
+                @csrf
+            
             <div class="card">
                 <div class="card-header">
                     <h4 class=" float-left">Order products</h4>
-                    <a data-toggle="modal" data-target="#addProduct" class="btn btn-dark float-right"><i class="fa fa-box"></i> Add Product</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-left">
@@ -33,7 +30,7 @@
                             <tr>
                                 <td>1</td>
                                 <td>
-                                    <select name="product_id" class="form-control product_id" id="product_id">
+                                    <select name="product_id[]" class="form-control product_id" id="product_id">
                                         <option value="0" selected disabled>--Choose--</option>
                                         @foreach($products as $product)
                                             <option data-price="{{$product->price}}" value="{{$product->id}}">
@@ -63,16 +60,75 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-4">
+             @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
                     <h4>Total: <b class="total">0.00</b> </h4>
                 </div>
                 <div class="card-body">
-                    
+                    <div class="panel">
+                        <div class="row">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>
+                                        <label for="customer_name">Customer name</label>
+                                        <input type="text" name="customer_name" class="form-control" id="customer_name">
+                                    </td>
+                                    <td>
+                                        <label for="customer_phone">Customer Phone</label>
+                                        <input type="text" name="customer_phone" class="form-control" id="customer_phone">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <td> Payment Method :  <br>
+                                <div class="">
+                                    <span class="radio-item">
+                                        <input type="radio" name="payment_method" id="payment_method" value="cash" checked="checked">
+                                        <label for="payment_method"><i class="fa fa-money-bill text-success"></i> Cash</label>
+                                    </span>
+                                    <span class="radio-item">
+                                        <input type="radio" name="payment_method" id="payment_method" value="bank_transfer" checked="checked">
+                                        <label for="payment_method"><i class="fa fa-university text-danger"></i> Transfer</label>
+                                    </span>
+                                    <span class="radio-item">
+                                        <input type="radio" name="payment_method" id="payment_method" value="credit_card" checked="checked">
+                                        <label for="payment_method"><i class="fa fa-credit-card text-dark"></i> Credit card</label>
+                                    </span>
+                                </div>
+                            </td>
+
+                            <td>
+                                Payment
+                                <input type="number" name="paid_amount" id="paid_amount" class="form-control">
+                            </td>
+
+                            <td>
+                                Returning Change
+                                <input type="number" readonly name="balance" id="balance" class="form-control">
+                            </td>
+
+                             <td>
+                                <button type="submit" class="btn btn-block btn-primary mt-3">Save</button>
+                            </td>
+                              <td>
+                                <button type="submit" class="btn btn-block btn-danger mt-2">Calculator</button>
+                            </td>
+                             <div style="text-align: center !important;">
+                                <a href="#"><i class="fa fa-sign-out-alt text-danger"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
@@ -207,6 +263,8 @@
     -webkit-transform: translate3d(25%,0,0) ;
     transform: translate3d(25%,,0,0);
   }
+
+  
 </style>
 
 @endsection
@@ -264,6 +322,13 @@
             var total_amount = (qty * price) - ((qty * price * disc) / 100);
             tr.find('.total_amount').val(total_amount);
             TotalAmount();
+        });
+
+        $('#paid_amount').keyup(function(){
+            var total = $('.total').html();
+            var paid_amount = $(this).val();
+            var tot = paid_amount - total;
+            $('#balance').val(tot).toFixed(2);
         })
 
     </script>
