@@ -19,7 +19,10 @@ class OrderController extends Controller
     {
         $orders = Order::all();
         $products = Product::all();
-        return view('orders.index', compact(['orders','products']));
+        $lastId = Order_Detail::max('order_id'); 
+        $orderReceipt = Order_Detail::with(['order.transaction','product'])->where('order_id', $lastId)->get(); 
+        $created = Order_Detail::with(['order.transaction','product'])->where('order_id', $lastId)->first();
+        return view('orders.index', compact(['orders','products','orderReceipt','created']));
     }
 
     /**
@@ -73,13 +76,6 @@ class OrderController extends Controller
         $transaction->transact_amount = $order_details->amount;
         $transaction->save();
 
-        $products = Product::all();
-        $order_detail = Order_Detail::where('order_id', $ordres->id)->get();
-        $orderBy = Order::where('id', $ordres->id)->get();
-
-        return view('orders.index', compact([
-            'products','order_detail','orderBy'
-        ]));
 
         return redirect()->back()->with('status','Transaksi berhasil ditambahkan');
     }

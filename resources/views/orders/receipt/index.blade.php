@@ -14,7 +14,7 @@
 		<div class="info">
 			<h2>Contact Us</h2>
 			<p>
-				Address : Bangkinang Riau, Indonesia
+				Address : Bangkinang Riau, Indonesia <br>
 				Email : Laravel@gmail.com
 				Phone : 081268312221
 			</p>
@@ -28,17 +28,19 @@
 					<td class="item"><h2>Items</h2></td>
 					<td class="hours"><h2>QTY</h2></td>
 					<td class="rate"><h2>Unit</h2></td>
-					<td class="rate"><h2>Disscount</h2></td>
+					<td class="rate"><h2>Discount</h2></td>
 					<td class="rate"><h2>Sub Total</h2></td>
 				</tr>
 
+				@foreach($orderReceipt as $receipt)
 				<tr class="service">
-					<td class="tableitem"><p class="itemtext">mango</p></td>
-					<td class="tableitem"><p class="itemtext">2</p></td>
-					<td class="tableitem"><p class="itemtext">10000</p></td>
-					<td class="tableitem"><p class="itemtext">0</p></td>
-					<td class="tableitem"><p class="itemtext">10000</p></td>
+					<td class="tableitem"><p class="itemtext">{{$receipt->product->product_name}}</p></td>
+					<td class="tableitem"><p class="itemtext">{{$receipt->quantity}}</p></td>
+					<td class="tableitem"><p class="itemtext">{{number_format($receipt->unitprice)}}</p></td>
+					<td class="tableitem"><p class="itemtext">{{$receipt->discount}}</p></td>
+					<td class="tableitem"><p class="itemtext">{{number_format($receipt->amount)}}</p></td>
 				</tr>
+				@endforeach
 
 				<tr class="tabletitle">
 					<td></td>
@@ -54,7 +56,7 @@
 					<td></td>
 					<td class="rate"><p class="itemtext">Total</p></td>
 					<td class="payment">
-						<h2>10000</h2>
+						<h2>{{number_format($orderReceipt->sum('amount') + 10)}}</h2>
 					</td>
 				</tr>
 			</table>
@@ -71,7 +73,7 @@
 				Serial : <span class="serial">
 					0091229122
 				</span>
-				<span>24/12/2020 &nbsp; &nbsp; 00: 45</span>
+				<span>{{$created->created_at}}</span>
 			</div>
 
 		</div>

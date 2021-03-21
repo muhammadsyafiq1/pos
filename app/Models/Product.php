@@ -12,4 +12,9 @@ class Product extends Model
     protected $fillable = [
     	'product_name','description','brand','price','quantity','alert_stock'
     ];
+
+    public function orderdetail()
+    {
+    	return $this->hasMany(Order_Detail::class, 'product_id');
+    }
 }

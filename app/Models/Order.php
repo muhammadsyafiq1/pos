@@ -12,4 +12,14 @@ class Order extends Model
     protected $fillable = [
     	'name','phone'
     ];
+
+     public function orderdetail()
+    {
+    	return $this->hasMany(Order_Detail::class, 'order_id');
+    }
+
+      public function transaction()
+    {
+    	return $this->hasMany(Transaction::class, 'order_id');
+    }
 }

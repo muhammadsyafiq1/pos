@@ -71,6 +71,20 @@
                     <h4>Total: <b class="total">0.00</b> </h4>
                 </div>
                 <div class="card-body">
+                    <div class="btn-group">
+                        <button class="btn btn-dark" type="button" onclick="printReceiptContent('print')">
+                            <i class="fa fa-print"></i>
+                            Print
+                        </button>
+                         <button class="btn btn-success" type="button" onclick="printReceiptContent('print')">
+                            <i class="fa fa-print"></i>
+                            History
+                        </button>
+                         <button class="btn btn-danger" type="button" onclick="printReceiptContent('print')">
+                            <i class="fa fa-print"></i>
+                            Report
+                        </button>
+                    </div>
                     <div class="panel">
                         <div class="row">
                             <table class="table table-striped">
@@ -134,123 +148,127 @@
 
 
 <!-- modal tambah user -->
- <div class="modal right fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h3 class="modal-title" id="staticBackdropLabel">Add Product</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-            <div class="modal-body">
-                <form action="{{ route('product.store') }}" method="post">
-                    @csrf
-                        <div class="form-group">
-                            <label for="product_name">Product name</label>
-                            <input id="product_name" 
-                                type="text" 
-                                class="form-control @error('product_name') is-invalid @enderror" 
-                                name="product_name" 
-                                value="{{ old('product_name') }}" 
-                                required autocomplete="product_name" 
-                                autofocus>
-                                @error('product_name')
+    <div class="modal right fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h3 class="modal-title" id="staticBackdropLabel">Add Product</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>s
+                <div class="modal-body">
+                    <form action="{{ route('product.store') }}" method="post">
+                        @csrf
+                            <div class="form-group">
+                                <label for="product_name">Product name</label>
+                                <input id="product_name" 
+                                    type="text" 
+                                    class="form-control @error('product_name') is-invalid @enderror" 
+                                    name="product_name" 
+                                    value="{{ old('product_name') }}" 
+                                    required autocomplete="product_name" 
+                                    autofocus>
+                                    @error('product_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="brand">Brand</label>
+                                <input id="brand" 
+                                    type="text" 
+                                    class="form-control @error('brand') is-invalid @enderror" 
+                                    name="brand" 
+                                    value="{{ old('brand') }}" 
+                                    required  
+                                    autofocus>
+                                    @error('brand')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input id="price" 
+                                    type="number" 
+                                    class="form-control @error('price') is-invalid @enderror" 
+                                    name="price" 
+                                    value="{{ old('price') }}" 
+                                    required  
+                                    autofocus>
+                                    @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input id="quantity" 
+                                    type="number" 
+                                    class="form-control @error('quantity') is-invalid @enderror" 
+                                    name="quantity" 
+                                    value="{{ old('quantity') }}" 
+                                    required  
+                                    autofocus>
+                                    @error('quantity')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="alert_stock">alert_stock</label>
+                                <input id="alert_stock" 
+                                    type="number" 
+                                    class="form-control @error('alert_stock') is-invalid @enderror" 
+                                    name="alert_stock" 
+                                    value="{{ old('alert_stock') }}" 
+                                    required  
+                                    autofocus>
+                                    @error('alert_stock')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Desc</label>
+                                <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="5" cols="3" id="description"></textarea>
+                                @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                        </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="brand">Brand</label>
-                            <input id="brand" 
-                                type="text" 
-                                class="form-control @error('brand') is-invalid @enderror" 
-                                name="brand" 
-                                value="{{ old('brand') }}" 
-                                required  
-                                autofocus>
-                                @error('brand')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input id="price" 
-                                type="number" 
-                                class="form-control @error('price') is-invalid @enderror" 
-                                name="price" 
-                                value="{{ old('price') }}" 
-                                required  
-                                autofocus>
-                                @error('price')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input id="quantity" 
-                                type="number" 
-                                class="form-control @error('quantity') is-invalid @enderror" 
-                                name="quantity" 
-                                value="{{ old('quantity') }}" 
-                                required  
-                                autofocus>
-                                @error('quantity')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="alert_stock">alert_stock</label>
-                            <input id="alert_stock" 
-                                type="number" 
-                                class="form-control @error('alert_stock') is-invalid @enderror" 
-                                name="alert_stock" 
-                                value="{{ old('alert_stock') }}" 
-                                required  
-                                autofocus>
-                                @error('alert_stock')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Desc</label>
-                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="5" cols="3" id="description"></textarea>
-                            @error('description')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary btn-block">Save Product</button>
-                        </div>
-                </form>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-block">Save Product</button>
+                            </div>
+                    </form>
+                </div>
             </div>
+         </div>
+    </div>
+</div>
+
+  <!-- receipt -->
+    <div class="modal">
+        <div id="print">
+            @include('orders.receipt.index')
         </div>
-     </div>
-</div>
-
-
-
-</div>
+    </div>
 
 <style>
   .modal.right .modal-dialog{
@@ -329,7 +347,22 @@
             var paid_amount = $(this).val();
             var tot = paid_amount - total;
             $('#balance').val(tot).toFixed(2);
-        })
+        });
+
+        function printReceiptContent(el){
+            var data = 
+                    ' <input type="button" id="printPageButton" class="printPageButton" style="display:block; margin-bottom: 8px; width:100%; border: none; background-color: #008b8b; color: #fff; padding: 14px 28px; font-size: 16px; cursor: pointer; text-align:center" value="Print Receipt" onclick="window.print()">';
+                data+= document.getElementById(el).innerHTML;
+                myReceipt = window.open("", "myWin", "left-150, top=130, width:400, height=400");
+                    myReceipt.screnX = 0;
+                    myReceipt.screnY = 0;
+                    myReceipt.document.write(data);
+                    myReceipt.document.title = "Print Receipt";
+                myReceipt.focus();
+                setTimeout(() => {
+                    myReceipt.close();
+                }, 8000);
+        }
 
     </script>
 @endpush
